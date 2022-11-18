@@ -28,12 +28,13 @@ class StartPage(tk.Frame):
 		tk.Frame.__init__(self,parent)
 		
 		
-		label1=tk.Label(self,text="ATTENDANCE MANAGEMENT SYSTEM Project using Python",font=("Times",26))
+		label1=tk.Label(self,text="CLOUD BASED ATTENDANCE MANAGEMENT SYSTEM\n\n",font=("Times",26))
     
-		bt1=tk.Button(self,text="Add new record",font=("Times",16),height=2,width=17,bg="blue" ,command=lambda:controller.show_frame(NewRecord))
-		bt2=tk.Button(self,text="Manage attendance",font=("Times",16),height=2,width=17,bg="yellow",command=lambda:controller.show_frame(ManageAttendance))
-		bt3=tk.Button(self,text="Delete record",font=("Times",16),height=2,width=17,bg="red",command=lambda:controller.show_frame(DeleteRecord))
-		bt4=tk.Button(self,text="Edit record",font=("Times",16),height=2,width=17,bg="orange",command=lambda:controller.show_frame(EditRecord))
+		bt1=tk.Button(self,text="NEW RECORD",font=("Times",16),height=2,width=15,bg="blue" ,command=lambda:controller.show_frame(NewRecord))
+		bt2=tk.Button(self,text="MANAGE",font=("Times",16),height=2,width=15,bg="yellow",command=lambda:controller.show_frame(ManageAttendance))
+		bt3=tk.Button(self,text="DELETE ",font=("Times",16),height=2,width=15,bg="red",command=lambda:controller.show_frame(DeleteRecord))
+		bt4=tk.Button(self,text="EDIT ",font=("Times",16),height=2,width=15,bg="green",command=lambda:controller.show_frame(EditRecord))
+
 		label1.pack()
 		bt1.pack()
 		bt2.pack()
@@ -43,11 +44,11 @@ class StartPage(tk.Frame):
 class NewRecord(tk.Frame):
 	def __init__(self,parent,controller):
 		tk.Frame.__init__(self,parent)
-		label1=tk.Label(self,text="New Record",font=("Times",24))
-		label2=tk.Label(self,text="NOTE: If you want a new record, previous one will be deleted,continue?",font=("Times",14))
+		label1=tk.Label(self,text="Want to Add New Record?",font=("Times",24))
+		label2=tk.Label(self,text=" ",font=("Times",14))
 		
-		bt2=tk.Button(self,text="YES",font=("Times",16),bg="orange",height=2,width=17,command=lambda:controller.show_frame(AddSubjects))
-		bt3=tk.Button(self,text="NO",font=("Times",16),bg="red",height=2,width=17,command=lambda:controller.show_frame(StartPage))
+		bt2=tk.Button(self,text="YES",font=("Times",16),bg="green",height=2,width=15,command=lambda:controller.show_frame(AddSubjects))
+		bt3=tk.Button(self,text="NO",font=("Times",16),bg="red",height=2,width=15,command=lambda:controller.show_frame(StartPage))
 		label1.pack()
 		label2.pack()
 		bt2.pack()
@@ -58,17 +59,17 @@ class ManageAttendance(tk.Frame):
 	def __init__(self,parent,controller):
 		tk.Frame.__init__(self,parent)
 		
-		label1=tk.Label(self,text="Manage Attendance",font=("Times",24))
+		label1=tk.Label(self,text="Manage Attendance\n\n",font=("Times",24))
 		label1.pack()
-		bt2=tk.Button(self,text="Show status", bg="green",font=("Times",16),height=2,width=17,command=lambda:self.showstatus(controller))
-		bt3=tk.Button(self,text="Today's data",  bg="orange",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(TodayData))	
-		bt1=tk.Button(self,text="Back to home",bg="red",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(StartPage))
+		bt2=tk.Button(self,text="SHOW STATUS", bg="blue",font=("Times",16),height=2,width=15,command=lambda:self.showstatus(controller))
+		bt3=tk.Button(self,text="TODAY'S DATA",  bg="green",font=("Times",16),height=2,width=15,command=lambda:controller.show_frame(TodayData))	
+		bt1=tk.Button(self,text="RETURN HOME",bg="yellow",font=("Times",16),height=2,width=15,command=lambda:controller.show_frame(StartPage))
 		bt2.pack()
 		bt3.pack()
 		bt1.pack()
 	def showstatus(self,controller):
 		try:
-			conn=sql.connect("attend")
+			conn=sql.connect("attend.db")
 			cur=conn.cursor()
 			cur.execute('SELECT * FROM attable')
 			text=""
@@ -79,7 +80,7 @@ class ManageAttendance(tk.Frame):
 					per=w[2]/(w[2]+w[3])
 					per=per*100
 					per=str(int(per))
-				text=text+"sub id "+str(w[0])+" "+w[1]+" "+per+"%\n"
+				text=text+"Subject Code "+str(w[0])+" "+w[1]+" "+per+"%\n"
 			messagebox.showinfo("status", text)
 		except:
 			messagebox.showinfo("Alert!", "There is no record")	
@@ -88,18 +89,18 @@ class ManageAttendance(tk.Frame):
 class DeleteRecord(tk.Frame):
 	def __init__(self,parent,controller):
 		tk.Frame.__init__(self,parent)
-		label1=tk.Label(self,text="Delete Record",font=("Times",24))
-		label2=tk.Label(self,text="This action will delete the record,continue?",font=("Times",12))
-		bt2=tk.Button(self,text="YES",bg="green",font=("Times",16),height=2,width=17,command=lambda:self.delrecord(controller))
-		bt1=tk.Button(self,text="NO",bg="yellow",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(StartPage))
-		bt3=tk.Button(self,text="Back to home",bg="red",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(StartPage))
+		label1=tk.Label(self,text="Delete Record\n",font=("Times",24))
+		label2=tk.Label(self,text="This action will delete the record,continue?\n\n\n",font=("Times",12))
+		bt2=tk.Button(self,text="YES",bg="green",font=("Times",16),height=2,width=15,command=lambda:self.delrecord(controller))
+		bt1=tk.Button(self,text="NO",bg="red",font=("Times",16),height=2,width=15,command=lambda:controller.show_frame(StartPage))
+		bt3=tk.Button(self,text="RETURN HOME",bg="yellow",font=("Times",16),height=2,width=15,command=lambda:controller.show_frame(StartPage))
 		label1.pack()
 		label2.pack()
 		bt2.pack()
 		bt1.pack()
 		bt3.pack()
 	def delrecord(self,controller):
-		conn=sql.connect('attend') 
+		conn=sql.connect('attend.db') 
 		cur=conn.cursor()
 		cur.execute('DROP TABLE IF EXISTS attable')	
 		conn.commit()
@@ -111,23 +112,23 @@ class DeleteRecord(tk.Frame):
 class EditRecord(tk.Frame):
 	def __init__(self,parent,controller):
 		tk.Frame.__init__(self,parent)
-		label1=tk.Label(self,text="Edit Record",font=("Times",24))
-		bt1=tk.Button(self,text="Back to home",bg="red",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(StartPage))
+		label1=tk.Label(self,text="EDIT RECORD\n",font=("Times",24))
+		bt1=tk.Button(self,text="RETURN HOME",bg="yellow",font=("Times",16),height=2,width=15,command=lambda:controller.show_frame(StartPage))
 		label1.pack()
-		lb2=tk.Label(self,text="Input Subject ID: ",font=("Times",15))
+		lb2=tk.Label(self,text="Enter Subject Code",font=("Times",15))
 		txt1=tk.Entry(self)
 		lb2.pack()
 		txt1.pack()
-		lb3=tk.Label(self,text="Number of times attended:",font=("Times",15))
+		lb3=tk.Label(self,text="Total Present",font=("Times",15))
 		txt2=tk.Entry(self)
-		lb4=tk.Label(self,text="Number of times bunked:",font=("Times",15))
+		lb4=tk.Label(self,text="Total Absent",font=("Times",15))
 		txt3=tk.Entry(self)
 		lb3.pack()
 		txt2.pack()
 		lb4.pack()
 		txt3.pack()
-		bt3=tk.Button(self,text="Update",bg="green",font=("Times",16),height=2,width=17,command=lambda:self.update(txt1.get(),txt2.get(),txt3.get()))
-		bt2=tk.Button(self,text="Show subjects ID",bg="yellow",font=("Times",16),height=2,width=17,command=lambda:self.showid(controller))
+		bt3=tk.Button(self,text="UPDATE",bg="blue",font=("Times",16),height=2,width=15,command=lambda:self.update(txt1.get(),txt2.get(),txt3.get()))
+		bt2=tk.Button(self,text="SHOW SUBJECT",bg="green",font=("Times",16),height=2,width=15,command=lambda:self.showid(controller))
 		bt2.pack()
 		bt3.pack()
 		bt1.pack()
@@ -144,7 +145,7 @@ class EditRecord(tk.Frame):
 			b=int(b)
 		try:
 		
-			conn=sql.connect("attend")
+			conn=sql.connect("attend.db")
 			cur=conn.cursor()
 			cur.execute("SELECT * FROM attable WHERE subid=?",(i,))
 			kk=cur.fetchone()
@@ -163,12 +164,12 @@ class EditRecord(tk.Frame):
 	
 	def showid(self,controller):
 		try:
-			conn=sql.connect("attend")
+			conn=sql.connect("attend.db")
 			cur=conn.cursor()
 			cur.execute('SELECT * FROM attable')
 			text=""
 			for w in cur:
-				text=text+"sub id "+str(w[0])+" "+w[1]+"\n"
+				text=text+"Subject Code "+str(w[0])+" "+w[1]+"\n"
 			messagebox.showinfo("Subject ID: ", text)
 			conn.commit()
 			conn.close()
@@ -179,18 +180,18 @@ class EditRecord(tk.Frame):
 class AddSubjects(tk.Frame):
 	def __init__(self,parent,controller):
 		tk.Frame.__init__(self,parent)
-		label1=tk.Label(self,text="Add subject's name seperated by commas(,)",font=("Times",16))
+		label1=tk.Label(self,text="Add subject's name seperated by commas(,)\n\n",font=("Times",16))
 		txt1=tk.Text(self,font=("Times",16),width=48,height=3)
 		
-		bt2=tk.Button(self,text="Add subjects!",bg="orange",font=("Times",16),height=2,width=17,command=lambda:self.addsub(txt1.get("1.0",tk.END),controller))
-		bt1=tk.Button(self,text="Back to home",bg="red",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(StartPage))
+		bt2=tk.Button(self,text="ADD SUBJECTS",bg="orange",font=("Times",16),height=2,width=17,command=lambda:self.addsub(txt1.get("1.0",tk.END),controller))
+		bt1=tk.Button(self,text="RETURN HOME",bg="red",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(StartPage))
 		label1.pack()
 		txt1.pack()
 		bt2.pack()	
 		bt1.pack()
 	def addsub(self,a,controller):
 		
-		conn=sql.connect('attend')
+		conn=sql.connect('attend.db')
 		cur=conn.cursor()
 		cur.execute('DROP TABLE IF EXISTS attable')
 		
@@ -214,34 +215,34 @@ class AddSubjects(tk.Frame):
 class TodayData(tk.Frame):
 	def __init__(self,parent,controller):
 		tk.Frame.__init__(self,parent)
-		label1=tk.Label(self,text="Enter data of today",font=("Times",24))
+		label1=tk.Label(self,text="TODAY'S ATTENDANCE",font=("Times",24))
 		label1.pack()
-		bt2=tk.Button(self,text="Show id of subjects",bg="yellow",font=("Times",16),height=2,width=17,command=lambda:self.showid(controller))
-		bt1=tk.Button(self,text="Back to home",bg="red",font=("Times",16),height=2,width=17,command=lambda:controller.show_frame(StartPage))
-		lb2=tk.Label(self,text="Input the corresponding Subject ID: ",font=("Times",15))
+		bt2=tk.Button(self,text="SHOW SUBJECT CODE",bg="yellow",font=("Times",16),height=2,width=19,command=lambda:self.showid(controller))
+		bt1=tk.Button(self,text="RETURN HOME",bg="red",font=("Times",16),height=2,width=19,command=lambda:controller.show_frame(StartPage))
+		lb2=tk.Label(self,text="Enter Subject Code",font=("Times",15))
 		txt1=tk.Entry(self)
 		lb2.pack()
 		txt1.pack()
-		lb3=tk.Label(self,text="Number of times attended:",font=("Times",15))
+		lb3=tk.Label(self,text="Total Present",font=("Times",15))
 		txt2=tk.Entry(self)
-		lb4=tk.Label(self,text="Number of times bunked:",font=("Times",15))
+		lb4=tk.Label(self,text="Total Absent",font=("Times",15))
 		txt3=tk.Entry(self)
 		lb3.pack()
 		txt2.pack()
 		lb4.pack()
 		txt3.pack()
-		bt3=tk.Button(self,text="Add to record",bg="orange",font=("Times",16),height=2,width=17,command=lambda:self.addrecord(txt1.get(),txt2.get(),txt3.get()))
+		bt3=tk.Button(self,text="ADD RECORD",bg="orange",font=("Times",16),height=2,width=19,command=lambda:self.addrecord(txt1.get(),txt2.get(),txt3.get()))
 		bt3.pack()
 		bt2.pack()
 		bt1.pack()
 	def showid(self,controller):
 		try:
-			conn=sql.connect("attend")
+			conn=sql.connect("attend.db")
 			cur=conn.cursor()
 			cur.execute('SELECT * FROM attable')
 			text=""
 			for w in cur:
-				text=text+"sub id "+str(w[0])+" "+w[1]+"\n"
+				text=text+"Subject Code "+str(w[0])+" "+w[1]+"\n"
 			messagebox.showinfo("Subject ID: ", text)
 			conn.commit()
 			conn.close()
@@ -260,7 +261,7 @@ class TodayData(tk.Frame):
 			b=int(b)
 		try:
 		
-			conn=sql.connect("attend")
+			conn=sql.connect("attend.db")
 			cur=conn.cursor()
 			cur.execute("SELECT * FROM attable WHERE subid=?",(i,))
 			kk=cur.fetchone()
@@ -278,7 +279,7 @@ class TodayData(tk.Frame):
 			
 def main():
 	app=AttendanceManager()
-	app.title("Cloud Based Attendance System")
+	app.title("Cloud-Based Attendance Management System")
 	app.mainloop()
 
 
